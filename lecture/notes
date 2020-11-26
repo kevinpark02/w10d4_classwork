@@ -1,0 +1,75 @@
+Application State
+    All the information that is displayed and/or available to dispaly on the frontend of an Application
+    When a change is made to an application resource (create, update, or destroy) the change is persisted to the database on the back-end and updated in state on the front-end
+
+Redux Principles
+    Single source of truth
+    State is read-only
+    Changes are made with pure functions
+
+File Structure
+    frontend folder
+        sentup entry file inside
+        Same structure that we learned on Tuesday with a few new folders
+            components
+            actions
+            reducers
+            store
+
+Store
+    Object managing the state of the application
+    with redux, we only have one store (other Flux implementations have multiple)
+    User createStore(RootReducer, [preloadedState], [enhancer]) to build store Object
+
+    Store API
+        getState
+        dispatch(action)
+        subscribe(callback)
+            provider and connect from reac-redux library handle invoking this method with appropriate callbacks to update React components
+
+Action Creators Recap
+    Functions that return an action
+        an action is an object with a type property
+        may also carry a payload
+
+    Use action creators to dynamically determine the payload
+
+reducers
+    Pure functions that update state based on the action's type
+    Returns either a new object with the updated state or the same state object
+    RootReducer combines multiple reducers into one using combineReducers
+        eeach reducer recevied every dispatched action but only deals with...
+
+State Shape Recap
+    Entire state tree is a POJO
+    Each reducer corresponds to a key in the store's state
+
+Getting the State to Components
+    provider
+        takes in store as a prop
+        provides the store to the component hiearchy
+    
+    connect
+        connect given component to a specific part of store (specific slices of state/actions to dispatch)
+
+Components
+    Presentational
+        soley concerned with rendering jsx as product of props/state
+        may or may not have a corresponding container
+    Container
+        subscribes the component to the redux store via connect
+        provides relevant slices of state to component via mapStateToProps
+        Provides functions that dispatch actions from presentational component via mapDispatchToProps
+
+When Is Redux a Good Idea?
+    your data changes over time
+    you want to cache data in memory, but it can change while cached
+    your data is relational and models include and depend one ach other
+    the same data is assembled from different sources and can be rendered in several places throughout the UI
+
+Trade-offs for redux
+    pros
+        Makes it easy to reason about complex data and uI changes  
+        Complements React well
+    cons
+        a lot of boiler plate
